@@ -7,11 +7,12 @@
 </head>
 <h1>Narrative Visualization</h1>
 <p>I'm hosted with GitHub Pages.</p>
-<div id="my_dataviz">
+<body>
+    <div id="my_dataviz">
     <script>
         var margin = {top: 10, right: 30, bottom: 30, left: 60},
-            width = 460 - margin.left - margin.right,
-            height = 400 - margin.top - margin.bottom;
+            width = 760 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
         var svg = d3.select("#my_dataviz")
@@ -22,11 +23,11 @@
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
         //Read the data
-        d3.csv("https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_daily_reports_us/07-19-2020.csv", function (data) {
+        d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (data) {
 
             // Add X axis
             var x = d3.scaleLinear()
-                .domain([4, 8])
+                .domain([0, 26000])
                 .range([0, width]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
@@ -34,15 +35,37 @@
 
             // Add Y axis
             var y = d3.scaleLinear()
-                .domain([0, 9])
+                .domain([0, 2000])
                 .range([height, 0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
 
             // Color scale: give me a specie name, I return a color
-            var color = d3.scaleOrdinal()
-                .domain(["setosa", "versicolor", "virginica"])
-                .range(["#440154ff", "#21908dff", "#fde725ff"])
+                var color = d3.scaleLinear()
+                .domain([0, 2000])
+                .range(["#aff05b", "#900c00"]);
+
+            // tooltip mouseover event handler
+              var tipMouseover = function(d) {
+                  // var color = colorScale(d.Province_State);
+                  var html  = d.Province_State + "<br/>" +
+                              "<span>" + d.Province_State + "</span><br/>" +
+                              "<b>" + d.Incident_Rate + "</b> Incident_Rate, <b/>" + d.Testing_Rate + "</b> Testing_Rate";
+
+                  tooltip.html(html)
+                      .style("left", (d3.event.pageX + 15) + "px")
+                      .style("top", (d3.event.pageY - 28) + "px")
+                    .transition()
+                      .duration(200) // ms
+                      .style("opacity", .9) // started as 0!
+
+              };
+              // tooltip mouseout event handler
+              var tipMouseout = function(d) {
+                  tooltip.transition()
+                      .duration(300) // ms
+                      .style("opacity", 0); // don't care about position!
+              };
 
             // Add dots
             svg.append('g')
@@ -51,21 +74,32 @@
                 .enter()
                 .append("circle")
                 .attr("cx", function (d) {
-                    return x(d.Sepal_Length);
+                    return x(d.Testing_Rate);
                 })
                 .attr("cy", function (d) {
-                    return y(d.Petal_Length);
+                    return y(d.Incident_Rate);
                 })
                 .attr("r", 5)
-                .style("fill", function (d) {
-                    return color(d.Species)
+                .style('fill', function(d) {
+                    return color(d.Incident_Rate);
                 })
-
+                .on("mouseover", tipMouseover)
+                .on("mouseout", tipMouseout);
+            // svg.selectAll("text")
+            //     .data(data).enter()
+            //     .append("text")
+            //     .attr("x", function (d) {
+            //         return x(d.Testing_Rate)-5;
+            //     })
+            //     .attr("y", function (d) {
+            //         return y(d.Incident_Rate)-10;
+            //     })
+            //     .text(function(d) {return d.Province_State})
+            //     .attr("font-size", "10px")
         })
 
     </script>
 </div>
-<body>
 
 </body>
 </html>
