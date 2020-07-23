@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 <head>
@@ -7,7 +7,7 @@
     <title>Index Page</title>
 </head>
 <h1>USA Covid-19 (July 19, 2020)</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<p>This visualization board contains an aggregation of each USA State level Covid-19 data.</p>
 <body>
 <div id="my_dataviz">
     <script>
@@ -54,6 +54,7 @@
                 .title("Incident Rate")
                 .labelFormat(d3.format(".0f"))
                 .labelAlign("start");
+
 
             // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
             // Its opacity is set to 0: we don't see it by default.
@@ -130,6 +131,7 @@
 
     </script>
 </div>
-
+<p>Source:<a href="https://github.com/manupri2/manupri2.github.io">USA Covid-19 Dataset (till July 19, 2020)</a><br><b>Incident_Rate</b> - confirmed cases per 100,000 persons.<br>
+    <b>Testing_Rate</b> - Total number of people tested per 100,000 persons.</p>
 </body>
 </html>
