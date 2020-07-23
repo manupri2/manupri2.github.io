@@ -4,11 +4,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <title>Index Page</title>
 </head>
-<h1>USA Covid-19 (July 19, 2020)</h1>
-<p>This visualization board contains an aggregation of each USA State level Covid-19 data.</p>
 <body>
+<div class="topnav">
+    <a class="active" href="#incident">Incident_Rate vs Testing_Rate</a>
+    <a href="#mortality">Mortality_Rate</a>
+    <a href="#statistics">Statistics</a>
+</div>
+<h3>USA Covid-19 (July 19, 2020)</h3>
+<p>This page shows the Incident and Testing Rates in each of the states of USA.</p>
 <div id="my_dataviz">
     <script>
         var margin = {top: 10, right: 70, bottom: 30, left: 60},
@@ -125,13 +131,14 @@
                 .attr("transform", "rotate(-90)")
                 .text("Incident Rate");
             svg.append("g")
-                .attr("transform", "translate(600,2)")
+                .attr("transform", "translate(580,50)")
                 .call(legend);
         })
 
     </script>
 </div>
-<p>Source:<a href="https://github.com/manupri2/manupri2.github.io">USA Covid-19 Dataset (till July 19, 2020)</a><br><b>Incident_Rate</b> - confirmed cases per 100,000 persons.<br>
+<p>Source:<a href="https://github.com/manupri2/manupri2.github.io">USA Covid-19 Dataset (till July 19, 2020)</a><br><b>Incident_Rate</b>
+    - confirmed cases per 100,000 persons.<br>
     <b>Testing_Rate</b> - Total number of people tested per 100,000 persons.</p>
 </body>
 </html>
