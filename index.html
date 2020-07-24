@@ -8,18 +8,29 @@
     <title>Index Page</title>
 </head>
 <body>
-<div class="topnav">
-    <a class="active" href="#incident">Incident_Rate vs Testing_Rate</a>
-    <a href="#mortality">Mortality_Rate</a>
-    <a href="#statistics">Statistics</a>
+<h2>USA Covid-19 (July 19, 2020)</h2>
+<p>This visualization board shows the Incident, Testing and Mortality Rates, along with the Number of Deaths, <br>
+    Confirmed and Active cases in each of the states of USA.  Source: <a href="https://github.com/manupri2/manupri2.github.io">USA Covid-19 Dataset (till July 19, 2020)</a></p>
+<!--<div class="topnav">-->
+<!--    <a class="active" href="#incident">Incident_Rate vs Testing_Rate</a>-->
+<!--    <a href="#mortality">Mortality_Rate</a>-->
+<!--    <a href="#statistics">Statistics</a>-->
+<!--</div>-->
+ <div class="pagination">
+  <a id="scatterplot" class="active" href="#" onclick="showScatterPlot()">Incident Rate vs Testing Rate</a>
+  <a id="maptab" href="#" onclick="showMap()">Mortality Rate</a>
+  <a id="bar" href="#" onclick="showbar()">Number Of Cases</a>
 </div>
-<h3>USA Covid-19 (July 19, 2020)</h3>
-<p>This page shows the Incident and Testing Rates in each of the states of USA.</p>
 <div id="my_dataviz">
     <script>
-        var margin = {top: 10, right: 70, bottom: 30, left: 60},
-            width = 750 - margin.left - margin.right,
-            height = 500 - margin.top - margin.bottom;
+    function showScatterPlot() {
+
+        var scatterplot = document.getElementById('scatterplot');
+        scatterplot.className = scatterplot.className + ' active';
+
+         var margin = {top: 40, right: 30, bottom: 100, left: 50},
+            width = 1000 - margin.left - margin.right,
+            height = 600 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
         var svg = d3.select("#my_dataviz")
@@ -35,14 +46,14 @@
             // Add X axis
             var x = d3.scaleLinear()
                 .domain([0, 26000])
-                .range([0, width]);
+                .range([0, width - 200]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
                 .call(d3.axisBottom(x));
 
             // Add Y axis
             var y = d3.scaleLinear()
-                .domain([0, 2000])
+                .domain([0, 2200])
                 .range([height, 0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
@@ -120,7 +131,7 @@
             svg.append("text")
                 .attr("class", "x label")
                 .attr("text-anchor", "end")
-                .attr("x", width)
+                .attr("x", width - 200)
                 .attr("y", height - 6)
                 .text("Testing Rate");
             svg.append("text")
@@ -131,14 +142,41 @@
                 .attr("transform", "rotate(-90)")
                 .text("Incident Rate");
             svg.append("g")
-                .attr("transform", "translate(580,50)")
+                .attr("transform", "translate(850,50)")
                 .call(legend);
-        })
+            svg.append("text")
+                .attr("x", (width / 2))
+                .attr("y", 0 - (margin.top / 2))
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .style("text-decoration", "underline")
+                .style("text-decoration", "bold")
+                .text("Incident Rate vs Testing Rate");
+            svg.append("text")
+                .attr("x", 375)
+                .attr("y", 510)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .style("text-decoration", "bold")
+                .text("Incident_Rate- confirmed cases per 100,000 persons. Testing_Rate - Total number of people tested per 100,000 persons.")
 
+        })
+    }
+
+    function clearcontent(elementID) {
+            document.getElementById(elementID).innerHTML = "";
+        }
+    function showMap() {
+            clearcontent("my_dataviz");
+            var maptab = document.getElementById('maptab');
+            maptab.className = maptab.className + ' active';
+            var scatterplottab = document.getElementById('scatterplot');
+            scatterplottab.className = scatterplottab.className + 'inactive';
+            var bartab = document.getElementById('scatterplot');
+            bartab.className = bartab.className + 'bar';
+        }
     </script>
 </div>
-<p>Source:<a href="https://github.com/manupri2/manupri2.github.io">USA Covid-19 Dataset (till July 19, 2020)</a><br><b>Incident_Rate</b>
-    - confirmed cases per 100,000 persons.<br>
-    <b>Testing_Rate</b> - Total number of people tested per 100,000 persons.</p>
+
 </body>
 </html>
