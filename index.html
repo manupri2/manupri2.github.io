@@ -2,8 +2,12 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
-<script src="us_map.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+<script src="mortality_rate_scatter_plot.js"></script>
 <script src="scatter_plot.js"></script>
+<script src="bar_chart.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles.css">
@@ -13,15 +17,10 @@
 <h2>USA Covid-19 (July 19, 2020)</h2>
 <p>This visualization board shows the Incident, Testing and Mortality Rates, along with the Number of Deaths, <br>
     Confirmed and Active cases in each of the states of USA.  Source: <a href="https://github.com/manupri2/manupri2.github.io">USA Covid-19 Dataset (till July 19, 2020)</a></p>
-<!--<div class="topnav">-->
-<!--    <a class="active" href="#incident">Incident_Rate vs Testing_Rate</a>-->
-<!--    <a href="#mortality">Mortality_Rate</a>-->
-<!--    <a href="#statistics">Statistics</a>-->
-<!--</div>-->
  <div class="pagination">
-  <a id="scatterplot" class="active" href="#" onclick="showScatterPlot()">Incident Rate vs Testing Rate</a>
-  <a id="maptab" href="#" onclick="showMap()">Mortality Rate</a>
-  <a id="bar" href="#" onclick="showBar()">Number Of Cases</a>
+  <a id="scatterplot" class="active" href="#" onclick="showScatterPlot()">Incident vs Testing Rate</a>
+  <a id="maptab" href="#" onclick="showMortalityRateScatterPlot()">Mortality vs Hospitalization Rate</a>
+  <a id="bar" href="#" onclick="showCases()">Statistics</a>
 </div>
 <div id="my_dataviz">
     <script>

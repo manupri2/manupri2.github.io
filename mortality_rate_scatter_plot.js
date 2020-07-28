@@ -1,9 +1,9 @@
-function showScatterPlot() {
+function showMortalityRateScatterPlot() {
         document.getElementById("my_dataviz").innerHTML = "";
         var scatterplot = document.getElementById('scatterplot');
-        scatterplot.className = 'active';
+        scatterplot.className = 'inactive';
         var maptab = document.getElementById('maptab');
-        maptab.className = 'inactive';
+        maptab.className = 'active';
         var bartab = document.getElementById('bar');
         bartab.className = 'inactive';
 
@@ -19,12 +19,13 @@ function showScatterPlot() {
             .append("g")
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
+
         //Read the data
         d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (data) {
 
             // Add X axis
             var x = d3.scaleLinear()
-                .domain([0, 26000])
+                .domain([0, 24])
                 .range([0, width - 200]);
             svg.append("g")
                 .attr("transform", "translate(0," + height + ")")
@@ -32,25 +33,24 @@ function showScatterPlot() {
 
             // Add Y axis
             var y = d3.scaleLinear()
-                .domain([0, 2200])
+                .domain([0, 10])
                 .range([height, 0]);
             svg.append("g")
                 .call(d3.axisLeft(y));
 
             // Color scale: give me a specie name, I return a color
             var color = d3.scaleLinear()
-                .domain([0, 2000])
+                .domain([0, 10])
                 .range(["#aff05b", "#900c00"]);
 
             var colorScale = d3.scaleSequential(d3.interpolateRainbow)
-                .domain([0, 2000]);
+                .domain([0, 10]);
             var legend = d3.legendColor()
                 .scale(color)
                 .shapeWidth(30)
-                .title("Incident Rate")
+                .title("Mortality Rate")
                 .labelFormat(d3.format(".0f"))
                 .labelAlign("start");
-
 
             // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
             // Its opacity is set to 0: we don't see it by default.
@@ -74,7 +74,7 @@ function showScatterPlot() {
 
             var mousemove = function (d) {
                 tooltip
-                    .html("<b>State: </b>" + d.Province_State + "<br><b>Incident Rate: </b>" + parseInt(d.Incident_Rate) + "<br><b>Testing Rate: </b>" + parseInt(d.Testing_Rate))
+                    .html("<b>State: </b>" + d.Province_State + "<br><b>Mortality Rate: </b>" + Math.round(d.Mortality_Rate * 10) / 10 + "<br><b>Hospitalization Rate: </b>" + Math.round(d.Hospitalization_Rate * 10) / 10)
                     .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
                     .style("top", (d3.event.pageY) + "px")
                     .style("display", "inline-block")
@@ -95,14 +95,17 @@ function showScatterPlot() {
                 .enter()
                 .append("circle")
                 .attr("cx", function (d) {
-                    return x(d.Testing_Rate);
+                    return x(d.Hospitalization_Rate);
                 })
                 .attr("cy", function (d) {
-                    return y(d.Incident_Rate);
+                    return y(d.Mortality_Rate);
                 })
-                .attr("r", 5)
+                .attr("r", function(d) {
+                    console.log(d.Hospitalization_Rate);
+                    return d.Hospitalization_Rate === "" ? 0 : 5;
+                })
                 .style('fill', function (d) {
-                    return color(d.Incident_Rate);
+                    return color(d.Mortality_Rate);
                 })
                 .on("mouseover", mouseover)
                 .on("mousemove", mousemove)
@@ -112,14 +115,14 @@ function showScatterPlot() {
                 .attr("text-anchor", "end")
                 .attr("x", width - 200)
                 .attr("y", height - 6)
-                .text("Testing Rate");
+                .text("Hospitalization Rate");
             svg.append("text")
                 .attr("class", "y label")
                 .attr("text-anchor", "end")
                 .attr("y", 6)
                 .attr("dy", ".75em")
                 .attr("transform", "rotate(-90)")
-                .text("Incident Rate");
+                .text("Mortality Rate");
             svg.append("g")
                 .attr("transform", "translate(850,50)")
                 .call(legend);
@@ -130,14 +133,14 @@ function showScatterPlot() {
                 .style("font-size", "16px")
                 .style("text-decoration", "underline")
                 .attr("font-weight", 700)
-                .text("Incident Rate vs Testing Rate");
+                .text("Mortality Rate vs Hospitalization Rate");
             svg.append("text")
-                .attr("x", 375)
+                .attr("x", 510)
                 .attr("y", 510)
                 .attr("text-anchor", "middle")
                 .style("font-size", "16px")
                 .style("text-decoration", "bold")
-                .text("Incident Rate- confirmed cases per 100,000 persons. Testing Rate - Total number of people tested per 100,000 persons.")
+                .text("Mortality Rate- Number recorded deaths * 100/ Number confirmed cases. Hospitalization Rate - Total number of people hospitalized * 100/ Number of confirmed cases")
 
         })
     }
