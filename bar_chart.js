@@ -85,6 +85,8 @@ function showDeaths() {
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -101,7 +103,7 @@ function showDeaths() {
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 
@@ -233,6 +235,8 @@ function showConfirmedCases() {
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -243,13 +247,14 @@ function showConfirmedCases() {
                     .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
                     .style("top", (d3.event.pageY) + "px")
                     .style("display", "inline-block")
+
             };
 
             // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 
@@ -378,6 +383,8 @@ function showActiveCases() {
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -394,7 +401,7 @@ function showActiveCases() {
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 
@@ -524,6 +531,8 @@ function showRecoveredCases(){
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -540,7 +549,7 @@ function showRecoveredCases(){
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 
@@ -672,6 +681,8 @@ function showPeopleTested(){
             // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -688,7 +699,7 @@ function showPeopleTested(){
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 
@@ -819,6 +830,8 @@ function showPeopleHospitalized(){
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -835,7 +848,7 @@ function showPeopleHospitalized(){
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 

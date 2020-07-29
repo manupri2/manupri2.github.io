@@ -69,6 +69,8 @@ function showMortalityRateScatterPlot() {
             // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
             var mouseover = function (d) {
                 tooltip
+                    .transition()
+                    .duration(200)
                     .style("opacity", 1)
             };
 
@@ -84,7 +86,7 @@ function showMortalityRateScatterPlot() {
             var mouseleave = function (d) {
                 tooltip
                     .transition()
-                    .duration(200)
+                    .duration(500)
                     .style("opacity", 0)
             };
 
