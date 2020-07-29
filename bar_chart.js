@@ -68,24 +68,43 @@ function showDeaths() {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
+     // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
     // Its opacity is set to 0: we don't see it by default.
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style('position', 'absolute')
-        .style("padding", "10px")
-        .html(function (d) {
-            console.log(d);
-            return "<strong>State: </strong>" + d.Province_State + "<br><strong>Deaths: </strong>" + d.Deaths + "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active);
-        });
+    var tooltip = d3.select("#my_dataviz")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style('position', 'absolute')
+                .style("padding", "10px");
 
-    svg.call(tip);
+    // A function that change this tooltip when the user hover a point.
+    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
+
+            var mousemove = function (d) {
+                tooltip
+                    .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Deaths: </strong>" + d.Deaths + "<br><strong>Confirmed: </strong>" + d.Confirmed
+                + "<br><strong>Active: </strong>" + parseInt(d.Active))
+                    .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.event.pageY) + "px")
+                    .style("display", "inline-block")
+            };
+
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+            };
+
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
@@ -135,8 +154,9 @@ function showDeaths() {
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
             .attr("y", function (d) {
@@ -198,22 +218,40 @@ function showConfirmedCases() {
 
     // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
     // Its opacity is set to 0: we don't see it by default.
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style('position', 'absolute')
-        .style("padding", "10px")
-        .html(function (d) {
-            console.log(d);
-            return "<strong>State: </strong>" + d.Province_State + "<br><strong>Confirmed: </strong>" + d.Confirmed + "<br><strong>Deaths: </strong>" + d.Deaths
-                + "<br><strong>Active: </strong>" + parseInt(d.Active);
-        });
+    var tooltip = d3.select("#my_dataviz")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style('position', 'absolute')
+                .style("padding", "10px");
 
-    svg.call(tip);
+    // A function that change this tooltip when the user hover a point.
+    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
+
+            var mousemove = function (d) {
+                tooltip
+                    .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Confirmed: </strong>" + d.Confirmed + "<br><strong>Deaths: </strong>" + d.Deaths
+                + "<br><strong>Active: </strong>" + parseInt(d.Active))
+                    .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.event.pageY) + "px")
+                    .style("display", "inline-block")
+            };
+
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+            };
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
@@ -263,8 +301,9 @@ function showConfirmedCases() {
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
             .attr("y", function (d) {
@@ -324,22 +363,40 @@ function showActiveCases() {
 
     // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
     // Its opacity is set to 0: we don't see it by default.
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style('position', 'absolute')
-        .style("padding", "10px")
-        .html(function (d) {
-            console.log(d);
-            return "<strong>State: </strong>" + d.Province_State + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths);
-        });
+    var tooltip = d3.select("#my_dataviz")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style('position', 'absolute')
+                .style("padding", "10px");
 
-    svg.call(tip);
+    // A function that change this tooltip when the user hover a point.
+    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
+
+            var mousemove = function (d) {
+                tooltip
+                    .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Confirmed: </strong>" + d.Confirmed
+                + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+                    .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.event.pageY) + "px")
+                    .style("display", "inline-block")
+            };
+
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+            };
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
@@ -389,8 +446,9 @@ function showActiveCases() {
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
             .attr("y", function (d) {
@@ -451,22 +509,42 @@ function showRecoveredCases(){
 
     // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
     // Its opacity is set to 0: we don't see it by default.
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style('position', 'absolute')
-        .style("padding", "10px")
-        .html(function (d) {
-            console.log(d);
-            return "<strong>State: </strong>" + d.Province_State + "<br><strong>Recovered: </strong>" + d.Recovered+ "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths);
-        });
+     var tooltip = d3.select("#my_dataviz")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style('position', 'absolute')
+                .style("padding", "10px");
 
-    svg.call(tip);
+    // A function that change this tooltip when the user hover a point.
+    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
+
+            var mousemove = function (d) {
+                tooltip
+                    .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Recovered: </strong>" + d.Recovered+ "<br><strong>Confirmed: </strong>" + d.Confirmed
+                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+                    .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.event.pageY) + "px")
+                    .style("display", "inline-block")
+            };
+
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+            };
+
+
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
@@ -516,8 +594,9 @@ function showRecoveredCases(){
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
             .attr("y", function (d) {
@@ -577,23 +656,41 @@ function showPeopleTested(){
             "translate(" + margin.left + "," + margin.top + ")");
 
     // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
-    // Its opacity is set to 0: we don't see it by default.
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style('position', 'absolute')
-        .style("padding", "10px")
-        .html(function (d) {
-            console.log(d);
-            return "<strong>State: </strong>" + d.Province_State + "<br><strong>People Tested: </strong>" + d.People_Tested +"<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths);
-        });
+            // Its opacity is set to 0: we don't see it by default.
+            var tooltip = d3.select("#my_dataviz")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style('position', 'absolute')
+                .style("padding", "10px");
 
-    svg.call(tip);
+            // A function that change this tooltip when the user hover a point.
+            // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
+
+            var mousemove = function (d) {
+                tooltip
+                    .html("<strong>State: </strong>" + d.Province_State + "<br><strong>People Tested: </strong>" + d.People_Tested +"<br><strong>Confirmed: </strong>" + d.Confirmed
+                     + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+                    .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.event.pageY) + "px")
+                    .style("display", "inline-block")
+            };
+
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+            };
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
@@ -643,8 +740,9 @@ function showPeopleTested(){
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
             .attr("y", function (d) {
@@ -706,22 +804,40 @@ function showPeopleHospitalized(){
 
     // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
     // Its opacity is set to 0: we don't see it by default.
-    var tip = d3.tip()
-        .attr('class', 'd3-tip')
-        .offset([-10, 0])
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "1px")
-        .style("border-radius", "5px")
-        .style('position', 'absolute')
-        .style("padding", "10px")
-        .html(function (d) {
-            console.log(d);
-            return "<strong>State: </strong>" + d.Province_State + "<br><strong>Hospitalized: </strong>" + d.People_Hospitalized + "<br><strong>People Tested: </strong>" + d.People_Tested +"<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths);
-        });
+    var tooltip = d3.select("#my_dataviz")
+                .append("div")
+                .style("opacity", 0)
+                .attr("class", "tooltip")
+                .style("background-color", "white")
+                .style("border", "solid")
+                .style("border-width", "1px")
+                .style("border-radius", "5px")
+                .style('position', 'absolute')
+                .style("padding", "10px");
 
-    svg.call(tip);
+    // A function that change this tooltip when the user hover a point.
+    // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+            var mouseover = function (d) {
+                tooltip
+                    .style("opacity", 1)
+            };
+
+            var mousemove = function (d) {
+                tooltip
+                    .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Hospitalized: </strong>" + d.People_Hospitalized + "<br><strong>People Tested: </strong>" + d.People_Tested +"<br><strong>Confirmed: </strong>" + d.Confirmed
+                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+                    .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+                    .style("top", (d3.event.pageY) + "px")
+                    .style("display", "inline-block")
+            };
+
+            // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+            var mouseleave = function (d) {
+                tooltip
+                    .transition()
+                    .duration(200)
+                    .style("opacity", 0)
+            };
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
@@ -771,8 +887,9 @@ function showPeopleHospitalized(){
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
-            .on('mouseover', tip.show)
-            .on('mouseout', tip.hide)
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
             .attr("y", function (d) {
