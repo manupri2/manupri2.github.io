@@ -161,8 +161,8 @@ function showMortalityRateScatterPlot() {
             .attr("y", 72)
             .text("Rates");
         svg.append("text")
-            .attr("x", 700)
-            .attr("y", 200)
+            .attr("x", 736)
+            .attr("y", 2)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
             .text("Hover Over for details!");
