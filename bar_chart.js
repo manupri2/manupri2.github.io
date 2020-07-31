@@ -55,9 +55,9 @@ function showCases() {
 function showDeaths() {
     d3.selectAll("svg").remove();
     // set the dimensions and margins of the graph
-    var margin = {top: 40, right: 30, bottom: 100, left: 65},
+    var margin = {top: 40, right: 30, bottom: 150, left: 65},
         width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 650 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -119,7 +119,7 @@ function showDeaths() {
         var x = d3.scaleBand()
             .range([0, width])
             .domain(data.map(function (d) {
-                return d.Province_State;
+                return d.Deaths === "" ? null: d.Province_State;
             }))
             .padding(0.2);
         svg.append("g")
@@ -140,13 +140,6 @@ function showDeaths() {
         var color = d3.scaleLinear()
             .domain([0, 35000])
             .range(["#aff05b", "#900c00"]);
-
-        var legend = d3.legendColor()
-            .scale(color)
-            .shapeWidth(30)
-            .title("Deaths")
-            .labelFormat(d3.format(".0f"))
-            .labelAlign("start");
 
         // Bars
         svg.selectAll("mybar")
@@ -185,9 +178,18 @@ function showDeaths() {
             .attr("dy", "-2em")
             .attr("transform", "rotate(-90)")
             .text("Number of Deaths");
-        svg.append("g")
-            .attr("transform", "translate(825,50)")
-            .call(legend);
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 65)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Highest number of Deaths: 32495");
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Lowest number of Deaths: 2");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -196,6 +198,13 @@ function showDeaths() {
             .style("text-decoration", "underline")
             .attr("font-weight", 700)
             .text("Number of Deaths in each US State");
+        svg.append("text")
+            .attr("x", 180)
+            .attr("y", 550)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("Deaths - Aggregated Death case count for the state.");
 
         return svg;
         })
@@ -204,9 +213,9 @@ function showDeaths() {
 function showConfirmedCases() {
     d3.selectAll("svg").remove();
     // set the dimensions and margins of the graph
-    var margin = {top: 40, right: 30, bottom: 100, left: 65},
+    var margin = {top: 40, right: 30, bottom: 150, left: 65},
         width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 650 - margin.top - margin.bottom;
 
 
     // append the svg object to the body of the page
@@ -269,7 +278,7 @@ function showConfirmedCases() {
         var x = d3.scaleBand()
             .range([0, width])
             .domain(data.map(function (d) {
-                return d.Province_State;
+                return d.Confirmed === "" ? null: d.Province_State;
             }))
             .padding(0.2);
         svg.append("g")
@@ -291,12 +300,10 @@ function showConfirmedCases() {
             .domain([0, 450000])
             .range(["#aff05b", "#900c00"]);
 
-        var legend = d3.legendColor()
-            .scale(color)
-            .shapeWidth(30)
-            .title("Confirmed Cases")
-            .labelFormat(d3.format(".0f"))
-            .labelAlign("start");
+        var texts = svg.selectAll("mytexts")
+                    .data(data)
+                    .enter()
+                    .append("text");
 
         // Bars
         svg.selectAll("mybar")
@@ -335,9 +342,18 @@ function showConfirmedCases() {
             .attr("dy", "-2em")
             .attr("transform", "rotate(-90)")
             .text("Confirmed Cases");
-        svg.append("g")
-            .attr("transform", "translate(825,50)")
-            .call(legend);
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 65)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Highest number of Confirmed cases: 406807");
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Lowest number of Confirmed cases: 37");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -346,6 +362,13 @@ function showConfirmedCases() {
             .style("text-decoration", "underline")
             .attr("font-weight", 700)
             .text("Confirmed Cases in each US State");
+        svg.append("text")
+            .attr("x", 200)
+            .attr("y", 550)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("Confirmed Cases - Aggregated confirmed case count for the state.");
         return svg;
         });
 }
@@ -353,9 +376,9 @@ function showConfirmedCases() {
 function showActiveCases() {
     d3.selectAll("svg").remove();
     // set the dimensions and margins of the graph
-    var margin = {top: 40, right: 30, bottom: 100, left: 65},
+    var margin = {top: 40, right: 30, bottom: 150, left: 65},
         width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 650 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -416,7 +439,7 @@ function showActiveCases() {
         var x = d3.scaleBand()
             .range([0, width])
             .domain(data.map(function (d) {
-                return d.Province_State;
+                return d.Active === "" ? null: d.Province_State;
             }))
             .padding(0.2);
         svg.append("g")
@@ -437,13 +460,6 @@ function showActiveCases() {
         var color = d3.scaleLinear()
             .domain([0, 400000])
             .range(["#aff05b", "#900c00"]);
-
-        var legend = d3.legendColor()
-            .scale(color)
-            .shapeWidth(30)
-            .title("Active Cases")
-            .labelFormat(d3.format(".0f"))
-            .labelAlign("start");
 
         // Bars
         svg.selectAll("mybar")
@@ -482,9 +498,18 @@ function showActiveCases() {
             .attr("dy", "-2em")
             .attr("transform", "rotate(-90)")
             .text("Active Cases");
-        svg.append("g")
-            .attr("transform", "translate(825,50)")
-            .call(legend);
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 65)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Highest number of Active Cases: 379191");
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Lowest number of Active Cases: 6");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -493,6 +518,13 @@ function showActiveCases() {
             .style("text-decoration", "underline")
             .attr("font-weight", 700)
             .text("Active Cases in each US State");
+        svg.append("text")
+            .attr("x", 320)
+            .attr("y", 550)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("Active - Aggregated confirmed cases that have not been resolved (Active = Confirmed - Recovered - Deaths).");
 
         return svg;
         })
@@ -501,9 +533,9 @@ function showActiveCases() {
 function showRecoveredCases(){
      d3.selectAll("svg").remove();
     // set the dimensions and margins of the graph
-    var margin = {top: 40, right: 30, bottom: 100, left: 65},
+    var margin = {top: 40, right: 30, bottom: 150, left: 65},
         width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 650 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -566,7 +598,7 @@ function showRecoveredCases(){
         var x = d3.scaleBand()
             .range([0, width])
             .domain(data.map(function (d) {
-                return d.Province_State;
+                return d.Recovered === "" ? null: d.Province_State;
             }))
             .padding(0.2);
         svg.append("g")
@@ -587,13 +619,6 @@ function showRecoveredCases(){
         var color = d3.scaleLinear()
             .domain([0, 180000])
             .range(["#aff05b", "#900c00"]);
-
-        var legend = d3.legendColor()
-            .scale(color)
-            .shapeWidth(30)
-            .title("Recovered Cases")
-            .labelFormat(d3.format(".0f"))
-            .labelAlign("start");
 
         // Bars
         svg.selectAll("mybar")
@@ -632,9 +657,18 @@ function showRecoveredCases(){
             .attr("dy", "-2em")
             .attr("transform", "rotate(-90)")
             .text("Recovered Cases");
-        svg.append("g")
-            .attr("transform", "translate(825,50)")
-            .call(legend);
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 65)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Highest number of Recovered Cases: 172936");
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Lowest number of Recovered Cases: 29");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -643,6 +677,13 @@ function showRecoveredCases(){
             .style("text-decoration", "underline")
             .attr("font-weight", 700)
             .text("Number of Recovered Cases in each US State");
+        svg.append("text")
+            .attr("x", 180)
+            .attr("y", 550)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("Recovered - Aggregated Recovered case count for the state.");
 
         return svg;
         })
@@ -651,9 +692,9 @@ function showRecoveredCases(){
 function showPeopleTested(){
     d3.selectAll("svg").remove();
     // set the dimensions and margins of the graph
-    var margin = {top: 40, right: 30, bottom: 100, left: 75},
+    var margin = {top: 40, right: 30, bottom: 150, left: 75},
         width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 650 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -714,7 +755,7 @@ function showPeopleTested(){
         var x = d3.scaleBand()
             .range([0, width])
             .domain(data.map(function (d) {
-                return d.Province_State;
+                return d.People_Tested === "" ? null: d.Province_State;
             }))
             .padding(0.2);
         svg.append("g")
@@ -735,13 +776,6 @@ function showPeopleTested(){
         var color = d3.scaleLinear()
             .domain([0, 6500000])
             .range(["#aff05b", "#900c00"]);
-
-        var legend = d3.legendColor()
-            .scale(color)
-            .shapeWidth(30)
-            .title("People Tested")
-            .labelFormat(d3.format(".0f"))
-            .labelAlign("start");
 
         // Bars
         svg.selectAll("mybar")
@@ -780,9 +814,18 @@ function showPeopleTested(){
             .attr("dy", "-2em")
             .attr("transform", "rotate(-90)")
             .text("People Tested");
-        svg.append("g")
-            .attr("transform", "translate(825,50)")
-            .call(legend);
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 65)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Highest number of People Tested: 6286852");
+        svg.append("text")
+            .attr("x", 645)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Lowest number of People Tested: 6884");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -791,6 +834,13 @@ function showPeopleTested(){
             .style("text-decoration", "underline")
             .attr("font-weight", 700)
             .text("Number of People Tested in each US State");
+        svg.append("text")
+            .attr("x", 200)
+            .attr("y", 550)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("People_Tested - Total number of people who have been tested.");
 
         return svg;
         })
@@ -800,9 +850,9 @@ function showPeopleTested(){
 function showPeopleHospitalized(){
     d3.selectAll("svg").remove();
     // set the dimensions and margins of the graph
-    var margin = {top: 40, right: 30, bottom: 100, left: 65},
+    var margin = {top: 40, right: 30, bottom: 150, left: 65},
         width = 1000 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 650 - margin.top - margin.bottom;
 
     // append the svg object to the body of the page
     var svg = d3.select("#my_dataviz")
@@ -863,7 +913,7 @@ function showPeopleHospitalized(){
         var x = d3.scaleBand()
             .range([0, width])
             .domain(data.map(function (d) {
-                return d.Province_State;
+                return d.People_Hospitalized === "" ? null: d.Province_State;
             }))
             .padding(0.2);
         svg.append("g")
@@ -885,18 +935,12 @@ function showPeopleHospitalized(){
             .domain([0, 90000])
             .range(["#aff05b", "#900c00"]);
 
-        var legend = d3.legendColor()
-            .scale(color)
-            .shapeWidth(30)
-            .title("People Hospitalized")
-            .labelFormat(d3.format(".0f"))
-            .labelAlign("start");
-
         // Bars
         svg.selectAll("mybar")
             .data(data)
             .enter()
             .append("rect")
+        // .filter(function(d) { return d.People_Hospitalized !== ""; })
             .attr("x", function (d) {
                 return x(d.Province_State);
             })
@@ -929,9 +973,18 @@ function showPeopleHospitalized(){
             .attr("dy", "-2em")
             .attr("transform", "rotate(-90)")
             .text("People Hospitalized");
-        svg.append("g")
-            .attr("transform", "translate(800,50)")
-            .call(legend);
+        svg.append("text")
+            .attr("x", 615)
+            .attr("y", 65)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Highest number of People Hospitalized: 89995");
+        svg.append("text")
+            .attr("x", 615)
+            .attr("y", 80)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Lowest number of People Hospitalized: 4");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -940,7 +993,13 @@ function showPeopleHospitalized(){
             .style("text-decoration", "underline")
             .attr("font-weight", 700)
             .text("Number of People Hospitalized in each US State");
-
+        svg.append("text")
+            .attr("x", 180)
+            .attr("y", 550)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("People_Hospitalized - Total number of people hospitalized.");
         return svg;
         })
 

@@ -42,28 +42,21 @@ function showScatterPlot() {
             .domain([0, 2000])
             .range(["#aff05b", "#900c00"]);
 
-            var colorScale = d3.scaleSequential(d3.interpolateRainbow)
-                .domain([0, 2000]);
-            var legend = d3.legendColor()
-                .scale(color)
-                .shapeWidth(30)
-                .title("Incident Rate")
-                .labelFormat(d3.format(".0f"))
-                .labelAlign("start");
+        var colorScale = d3.scaleSequential(d3.interpolateRainbow)
+            .domain([0, 2000]);
 
-
-            // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
-            // Its opacity is set to 0: we don't see it by default.
-            var tooltip = d3.select("#my_dataviz")
-                .append("div")
-                .style("opacity", 0)
-                .attr("class", "tooltip")
-                .style("background-color", "white")
-                .style("border", "solid")
-                .style("border-width", "1px")
-                .style("border-radius", "5px")
-                .style('position', 'absolute')
-                .style("padding", "10px");
+        // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
+        // Its opacity is set to 0: we don't see it by default.
+        var tooltip = d3.select("#my_dataviz")
+            .append("div")
+            .style("opacity", 0)
+            .attr("class", "tooltip")
+            .style("background-color", "white")
+            .style("border", "solid")
+            .style("border-width", "1px")
+            .style("border-radius", "5px")
+            .style('position', 'absolute')
+            .style("padding", "10px");
 
         // A function that change this tooltip when the user hover a point.
         // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
@@ -90,56 +83,100 @@ function showScatterPlot() {
                 .style("opacity", 0)
         };
 
-            // Add dots
-            svg.append('g')
-                .selectAll("dot")
-                .data(data)
-                .enter()
-                .append("circle")
-                .attr("cx", function (d) {
-                    return x(d.Testing_Rate);
-                })
-                .attr("cy", function (d) {
-                    return y(d.Incident_Rate);
-                })
-                .attr("r", 5)
-                .style('fill', function (d) {
-                    return color(d.Incident_Rate);
-                })
-                .on("mouseover", mouseover)
-                .on("mousemove", mousemove)
-                .on("mouseleave", mouseleave);
-            svg.append("text")
-                .attr("class", "x label")
-                .attr("text-anchor", "end")
-                .attr("x", width - 200)
-                .attr("y", height - 6)
-                .text("Testing Rate");
-            svg.append("text")
-                .attr("class", "y label")
-                .attr("text-anchor", "end")
-                .attr("y", 6)
-                .attr("dy", ".75em")
-                .attr("transform", "rotate(-90)")
-                .text("Incident Rate");
-            svg.append("g")
-                .attr("transform", "translate(850,50)")
-                .call(legend);
-            svg.append("text")
-                .attr("x", (width / 2))
-                .attr("y", 0 - (margin.top / 2))
-                .attr("text-anchor", "middle")
-                .style("font-size", "16px")
-                .style("text-decoration", "underline")
-                .attr("font-weight", 700)
-                .text("Incident Rate vs Testing Rate");
-            svg.append("text")
-                .attr("x", 375)
-                .attr("y", 510)
-                .attr("text-anchor", "middle")
-                .style("font-size", "16px")
-                .style("text-decoration", "bold")
-                .text("Incident Rate- confirmed cases per 100,000 persons. Testing Rate - Total number of people tested per 100,000 persons.")
+        // Add dots
+        svg.append('g')
+            .selectAll("dot")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", function (d) {
+                return x(d.Testing_Rate);
+            })
+            .attr("cy", function (d) {
+                return y(d.Incident_Rate);
+            })
+            .attr("r", 5)
+            .style('fill', function (d) {
+                return color(d.Incident_Rate);
+            })
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
+            .transition() // <---- Here is the transition
+            .duration(2000);
+        svg.append("text")
+            .attr("class", "x label")
+            .attr("text-anchor", "end")
+            .attr("x", width - 200)
+            .attr("y", height - 6)
+            .text("Testing Rate");
+        svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .attr("y", 6)
+            .attr("dy", ".75em")
+            .attr("transform", "rotate(-90)")
+            .text("Incident Rate");
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .attr("font-weight", 700)
+            .text("Incident Rate vs Testing Rate");
+        svg.append("text")
+            .attr("x", 160)
+            .attr("y", 510)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("Incident Rate- confirmed cases per 100,000 persons.");
+        svg.append("text")
+            .attr("x", 200)
+            .attr("y", 530)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "bold")
+            .text("Testing Rate - Total number of people tested per 100,000 persons.");
+        svg.append('line')
+            .attr("x1", 600)
+            .attr("y1", 50)
+            .attr("x2", 750)
+            .attr("y2", 50)
+            // .style("stroke-dasharray", "5,5")//dashed array for line
+            .style("stroke", "black");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 52)
+            .text("LA and AK have almost same Testing Rate");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 67)
+            .text("Testing Rate, but LA has high ");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 82)
+            .text("Incident Rate, ");
+        svg.append('line')
+            .attr("x1", 615)
+            .attr("y1", 405)
+            .attr("x2", 750)
+            .attr("y2", 405)
+            // .style("stroke-dasharray", "5,5")//dashed array for line
+            .style("stroke", "black");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 407)
+            .text("and AK has low incident rate.");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 422)
+            .text("Incident Rate is not dependent");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 437)
+            .text("on Testing Rate.");
 
-        })
-    }
+    })
+}
