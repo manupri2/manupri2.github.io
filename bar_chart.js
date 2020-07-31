@@ -24,6 +24,13 @@ function showCases() {
         .attr("value", function (d) {
             return d;
         });
+    d3.select("#my_dataviz")
+        .append("text")
+            .attr("x", 630)
+            .attr("y", 200)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("    \t Hover Over for details!");
 
     showConfirmedCases();
     dropDown.on("change", function (d) {

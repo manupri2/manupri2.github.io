@@ -149,15 +149,15 @@ function showScatterPlot() {
         svg.append("text")
             .attr("x", 756)
             .attr("y", 52)
-            .text("LA and AK have almost same Testing Rate");
+            .text("Incident Rate is not dependent");
         svg.append("text")
             .attr("x", 756)
             .attr("y", 67)
-            .text("Testing Rate, but LA has high ");
+            .text("on Testing Rate. LA has high ");
         svg.append("text")
             .attr("x", 756)
             .attr("y", 82)
-            .text("Incident Rate, ");
+            .text("Incident Rate, and ..");
         svg.append('line')
             .attr("x1", 615)
             .attr("y1", 405)
@@ -168,15 +168,19 @@ function showScatterPlot() {
         svg.append("text")
             .attr("x", 756)
             .attr("y", 407)
-            .text("and AK has low incident rate.");
+            .text(".. AK has low incident rate.");
         svg.append("text")
             .attr("x", 756)
             .attr("y", 422)
-            .text("Incident Rate is not dependent");
+            .text(" whereas LA and AK have ");
         svg.append("text")
             .attr("x", 756)
             .attr("y", 437)
-            .text("on Testing Rate.");
+            .text("almost same Testing Rate.");
+        svg.append("text")
+            .attr("x", 756)
+            .attr("y", 0)
+            .text("Hover Over for details!");
 
     })
 }
