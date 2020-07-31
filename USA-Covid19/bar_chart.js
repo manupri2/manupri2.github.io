@@ -82,7 +82,7 @@ function showDeaths() {
         .style('position', 'absolute')
         .style("padding", "10px");
 
-     var previous;
+    var previous;
 
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
@@ -96,7 +96,7 @@ function showDeaths() {
             .duration(200)
             .style("opacity", 1);
         tooltip.html("<strong>State: </strong>" + d.Province_State + "<br><strong>Deaths: </strong>" + d.Deaths + "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active))
+            + "<br><strong>Active: </strong>" + parseInt(d.Active))
             .style("left", d + "px")
             .style("top", d + "px")
             .style("display", "inline-block")
@@ -264,7 +264,7 @@ function showConfirmedCases() {
             .duration(200)
             .style("opacity", 1);
         tooltip.html("<strong>State: </strong>" + d.Province_State + "<br><strong>Confirmed: </strong>" + d.Confirmed + "<br><strong>Deaths: </strong>" + d.Deaths
-                + "<br><strong>Active: </strong>" + parseInt(d.Active))
+            + "<br><strong>Active: </strong>" + parseInt(d.Active))
             .style("left", d + "px")
             .style("top", d + "px")
             .style("display", "inline-block")
@@ -421,7 +421,7 @@ function showActiveCases() {
         .style('position', 'absolute')
         .style("padding", "10px");
 
-     var previous;
+    var previous;
 
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
@@ -435,7 +435,7 @@ function showActiveCases() {
             .duration(200)
             .style("opacity", 1);
         tooltip.html("<strong>State: </strong>" + d.Province_State + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+            + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
             .style("left", d + "px")
             .style("top", d + "px")
             .style("display", "inline-block")
@@ -533,7 +533,7 @@ function showActiveCases() {
             .attr("text-anchor", "start")
             .style("font-size", "16px")
             .text("Lowest number of Active Cases: 6");
-         svg.append("text")
+        svg.append("text")
             .attr("x", 645)
             .attr("y", 30)
             .attr("text-anchor", "start")
@@ -587,33 +587,36 @@ function showRecoveredCases() {
         .style("border-radius", "5px")
         .style('position', 'absolute')
         .style("padding", "10px");
+    var previous;
 
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
     var mouseover = function (d) {
+        previous = d3.select(this).style("fill");
+        d3.select(this)
+            .style('fill', 'slateblue')
+            .attr('r', 10);
         tooltip
             .transition()
             .duration(200)
-            .style("opacity", 1)
-    };
-
-    var mousemove = function (d) {
-        tooltip
-            .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Recovered: </strong>" + d.Recovered + "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
-            .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", (d3.event.pageY) + "px")
+            .style("opacity", 1);
+        tooltip.html("<strong>State: </strong>" + d.Province_State + "<br><strong>Recovered: </strong>" + d.Recovered + "<br><strong>Confirmed: </strong>" + d.Confirmed
+            + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+            .style("left", d + "px")
+            .style("top", d + "px")
             .style("display", "inline-block")
     };
 
     // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
     var mouseleave = function (d) {
+        d3.select(this)
+            .style("fill", previous)
+            .attr('r', 5);
         tooltip
             .transition()
             .duration(500)
             .style("opacity", 0)
     };
-
 
     // Parse the Data
     d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
@@ -657,7 +660,6 @@ function showRecoveredCases() {
                 return x(d.Province_State);
             })
             .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
@@ -686,13 +688,13 @@ function showRecoveredCases() {
             .attr("transform", "rotate(-90)")
             .text("Recovered Cases");
         svg.append("text")
-            .attr("x", 640)
+            .attr("x", 635)
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
             .text("Highest number of Recovered Cases: 172,936");
         svg.append("text")
-            .attr("x", 640)
+            .attr("x", 635)
             .attr("y", 80)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
@@ -712,6 +714,12 @@ function showRecoveredCases() {
             .style("font-size", "16px")
             .style("text-decoration", "bold")
             .text("Recovered - Aggregated Recovered case count for the state.");
+        svg.append("text")
+            .attr("x", 635)
+            .attr("y", 30)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Hover Over for details!");
 
         return svg;
     })
@@ -746,26 +754,31 @@ function showPeopleTested() {
         .style('position', 'absolute')
         .style("padding", "10px");
 
+    var previous;
+
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
     var mouseover = function (d) {
+        previous = d3.select(this).style("fill");
+        d3.select(this)
+            .style('fill', 'slateblue')
+            .attr('r', 10);
         tooltip
             .transition()
             .duration(200)
-            .style("opacity", 1)
-    };
-
-    var mousemove = function (d) {
-        tooltip
-            .html("<strong>State: </strong>" + d.Province_State + "<br><strong>People Tested: </strong>" + d.People_Tested + "<br><strong>Confirmed: </strong>" + d.Confirmed
-                + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
-            .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", (d3.event.pageY) + "px")
+            .style("opacity", 1);
+        tooltip.html("<strong>State: </strong>" + d.Province_State + "<br><strong>People Tested: </strong>" + d.People_Tested + "<br><strong>Confirmed: </strong>" + d.Confirmed
+            + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
+            .style("left", d + "px")
+            .style("top", d + "px")
             .style("display", "inline-block")
     };
 
     // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
     var mouseleave = function (d) {
+        d3.select(this)
+            .style("fill", previous)
+            .attr('r', 5);
         tooltip
             .transition()
             .duration(500)
@@ -814,7 +827,6 @@ function showPeopleTested() {
                 return x(d.Province_State);
             })
             .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
@@ -843,13 +855,13 @@ function showPeopleTested() {
             .attr("transform", "rotate(-90)")
             .text("People Tested");
         svg.append("text")
-            .attr("x", 630)
+            .attr("x", 625)
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
             .text("Highest number of People Tested: 6,286,852");
         svg.append("text")
-            .attr("x", 630)
+            .attr("x", 625)
             .attr("y", 80)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
@@ -869,6 +881,12 @@ function showPeopleTested() {
             .style("font-size", "16px")
             .style("text-decoration", "bold")
             .text("People_Tested - Total number of people who have been tested.");
+        svg.append("text")
+            .attr("x", 625)
+            .attr("y", 30)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Hover Over for details!");
 
         return svg;
     })
@@ -904,26 +922,31 @@ function showPeopleHospitalized() {
         .style('position', 'absolute')
         .style("padding", "10px");
 
+    var previous;
+
     // A function that change this tooltip when the user hover a point.
     // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
     var mouseover = function (d) {
+        previous = d3.select(this).style("fill");
+        d3.select(this)
+            .style('fill', 'slateblue')
+            .attr('r', 10);
         tooltip
             .transition()
             .duration(200)
-            .style("opacity", 1)
-    };
-
-    var mousemove = function (d) {
-        tooltip
-            .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Hospitalized: </strong>" + d.People_Hospitalized + "<br><strong>People Tested: </strong>" + d.People_Tested + "<br><strong>Confirmed: </strong>" + d.Confirmed
+            .style("opacity", 1);
+        tooltip .html("<strong>State: </strong>" + d.Province_State + "<br><strong>Hospitalized: </strong>" + d.People_Hospitalized + "<br><strong>People Tested: </strong>" + d.People_Tested + "<br><strong>Confirmed: </strong>" + d.Confirmed
                 + "<br><strong>Active: </strong>" + parseInt(d.Active) + "<br><strong>Deaths: </strong>" + parseInt(d.Deaths))
-            .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-            .style("top", (d3.event.pageY) + "px")
+            .style("left", d + "px")
+            .style("top", d + "px")
             .style("display", "inline-block")
     };
 
     // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
     var mouseleave = function (d) {
+        d3.select(this)
+            .style("fill", previous)
+            .attr('r', 5);
         tooltip
             .transition()
             .duration(500)
@@ -973,7 +996,6 @@ function showPeopleHospitalized() {
                 return x(d.Province_State);
             })
             .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000)
@@ -1002,13 +1024,13 @@ function showPeopleHospitalized() {
             .attr("transform", "rotate(-90)")
             .text("People Hospitalized");
         svg.append("text")
-            .attr("x", 615)
+            .attr("x", 610)
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
             .text("Highest number of People Hospitalized: 89,995");
         svg.append("text")
-            .attr("x", 615)
+            .attr("x", 610)
             .attr("y", 80)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
@@ -1028,6 +1050,13 @@ function showPeopleHospitalized() {
             .style("font-size", "16px")
             .style("text-decoration", "bold")
             .text("People_Hospitalized - Total number of people hospitalized.");
+        svg.append("text")
+            .attr("x", 610)
+            .attr("y", 30)
+            .attr("text-anchor", "start")
+            .style("font-size", "16px")
+            .text("Hover Over for details!");
+
         return svg;
     })
 
