@@ -183,7 +183,7 @@ function showDeaths() {
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Highest number of Deaths: 32495");
+            .text("Highest number of Deaths: 32,495");
         svg.append("text")
             .attr("x", 645)
             .attr("y", 80)
@@ -347,7 +347,7 @@ function showConfirmedCases() {
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Highest number of Confirmed cases: 406807");
+            .text("Highest number of Confirmed cases: 406,807");
         svg.append("text")
             .attr("x", 645)
             .attr("y", 80)
@@ -503,7 +503,7 @@ function showActiveCases() {
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Highest number of Active Cases: 379191");
+            .text("Highest number of Active Cases: 379,191");
         svg.append("text")
             .attr("x", 645)
             .attr("y", 80)
@@ -658,13 +658,13 @@ function showRecoveredCases(){
             .attr("transform", "rotate(-90)")
             .text("Recovered Cases");
         svg.append("text")
-            .attr("x", 645)
+            .attr("x", 640)
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Highest number of Recovered Cases: 172936");
+            .text("Highest number of Recovered Cases: 172,936");
         svg.append("text")
-            .attr("x", 645)
+            .attr("x", 640)
             .attr("y", 80)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
@@ -815,17 +815,17 @@ function showPeopleTested(){
             .attr("transform", "rotate(-90)")
             .text("People Tested");
         svg.append("text")
-            .attr("x", 645)
+            .attr("x", 630)
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Highest number of People Tested: 6286852");
+            .text("Highest number of People Tested: 6,286,852");
         svg.append("text")
-            .attr("x", 645)
+            .attr("x", 630)
             .attr("y", 80)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Lowest number of People Tested: 6884");
+            .text("Lowest number of People Tested: 6,884");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -978,7 +978,7 @@ function showPeopleHospitalized(){
             .attr("y", 65)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Highest number of People Hospitalized: 89995");
+            .text("Highest number of People Hospitalized: 89,995");
         svg.append("text")
             .attr("x", 615)
             .attr("y", 80)
