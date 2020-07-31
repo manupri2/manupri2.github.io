@@ -59,25 +59,30 @@ function showMortalityRateScatterPlot() {
             .style('position', 'absolute')
             .style("padding", "10px");
 
+        var previous;
+
         // A function that change this tooltip when the user hover a point.
         // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
         var mouseover = function (d) {
+             previous = d3.select(this).style("fill");
+            d3.select(this)
+                .style('fill', 'slateblue')
+                .attr('r', 10);
             tooltip
                 .transition()
                 .duration(200)
-                .style("opacity", 1)
-        };
-
-        var mousemove = function (d) {
-            tooltip
-                .html("<b>State: </b>" + d.Province_State + "<br><b>Mortality Rate: </b>" + Math.round(d.Mortality_Rate * 10) / 10 + "<br><b>Hospitalization Rate: </b>" + Math.round(d.Hospitalization_Rate * 10) / 10)
-                .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-                .style("top", (d3.event.pageY) + "px")
+                .style("opacity", 1);
+            tooltip.html("<b>State: </b>" + d.Province_State + "<br><b>Mortality Rate: </b>" + Math.round(d.Mortality_Rate * 10) / 10 + "<br><b>Hospitalization Rate: </b>" + Math.round(d.Hospitalization_Rate * 10) / 10)
+                .style("left", d + "px")
+                .style("top", d + "px")
                 .style("display", "inline-block")
         };
 
         // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
         var mouseleave = function (d) {
+            d3.select(this)
+                .style("fill", previous)
+                .attr('r', 5);
             tooltip
                 .transition()
                 .duration(500)
@@ -104,7 +109,6 @@ function showMortalityRateScatterPlot() {
                 return color(d.Mortality_Rate);
             })
             .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
             .on("mouseleave", mouseleave);
         svg.append("text")
             .attr("class", "x label")
@@ -144,12 +148,12 @@ function showMortalityRateScatterPlot() {
         svg.append('line')
             .attr("x1", 675)
             .attr("y1", 38)
-            .attr("x2", 734)
+            .attr("x2", 730)
             .attr("y2", 38)
             // .style("stroke-dasharray", "5,5")//dashed array for line
             .style("stroke", "black");
         svg.append("text")
-            .attr("x", 736)
+            .attr("x", 734)
             .attr("y", 42)
             .text("States with higher hospitalization");
         svg.append("text")

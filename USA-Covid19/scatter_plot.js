@@ -58,25 +58,30 @@ function showScatterPlot() {
             .style('position', 'absolute')
             .style("padding", "10px");
 
+        var previous;
+
         // A function that change this tooltip when the user hover a point.
         // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
         var mouseover = function (d) {
+             previous = d3.select(this).style("fill");
+            d3.select(this)
+                .style('fill', 'slateblue')
+                .attr('r', 10);
             tooltip
                 .transition()
                 .duration(200)
-                .style("opacity", 1)
-        };
-
-        var mousemove = function (d) {
-            tooltip
-                .html("<b>State: </b>" + d.Province_State + "<br><b>Incident Rate: </b>" + parseInt(d.Incident_Rate) + "<br><b>Testing Rate: </b>" + parseInt(d.Testing_Rate))
-                .style("left", (d3.event.pageX) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-                .style("top", (d3.event.pageY) + "px")
+                .style("opacity", 1);
+            tooltip.html("<b>State: </b>" + d.Province_State + "<br><b>Incident Rate: </b>" + parseInt(d.Incident_Rate) + "<br><b>Testing Rate: </b>" + parseInt(d.Testing_Rate))
+                .style("left", d + "px")
+                .style("top", d + "px")
                 .style("display", "inline-block")
         };
 
         // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
         var mouseleave = function (d) {
+            d3.select(this)
+                .style("fill", previous)
+                .attr('r', 5);
             tooltip
                 .transition()
                 .duration(500)
@@ -100,7 +105,6 @@ function showScatterPlot() {
                 return color(d.Incident_Rate);
             })
             .on("mouseover", mouseover)
-            .on("mousemove", mousemove)
             .on("mouseleave", mouseleave)
             .transition() // <---- Here is the transition
             .duration(2000);
