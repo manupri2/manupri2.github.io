@@ -20,7 +20,7 @@ function showScatterPlot() {
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
     //Read the data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (data) {
 
         // Add X axis
         var x = d3.scaleLinear()

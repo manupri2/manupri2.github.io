@@ -116,7 +116,7 @@ function showDeaths() {
 
 
     // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
         if (error) throw error;
 
         data.sort(function (a, b) {
@@ -275,7 +275,7 @@ function showConfirmedCases() {
             };
 
     // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
         if (error) throw error;
 
         data.sort(function (a, b) {
@@ -436,7 +436,7 @@ function showActiveCases() {
             };
 
     // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
         if (error) throw error;
 
         data.sort(function (a, b) {
@@ -595,7 +595,7 @@ function showRecoveredCases(){
 
 
     // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
         if (error) throw error;
 
         data.sort(function (a, b) {
@@ -752,7 +752,7 @@ function showPeopleTested(){
             };
 
     // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
         if (error) throw error;
 
         data.sort(function (a, b) {
@@ -910,7 +910,7 @@ function showPeopleHospitalized(){
             };
 
     // Parse the Data
-    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/07-19-2020.csv", function (error, data) {
+    d3.csv("https://raw.githubusercontent.com/manupri2/manupri2.github.io/master/USA-Covid19/07-19-2020.csv", function (error, data) {
         if (error) throw error;
 
         data.sort(function (a, b) {
