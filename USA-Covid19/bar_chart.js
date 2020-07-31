@@ -23,13 +23,6 @@ function showCases() {
         .attr("value", function (d) {
             return d;
         });
-    // d3.select("#my_dataviz")
-    //     .append("text")
-    //     .attr("x", 630)
-    //     .attr("y", 200)
-    //     .attr("text-anchor", "start")
-    //     .style("font-size", "16px")
-    //     .text("    \t Hover Over for details!");
 
     showConfirmedCases();
     dropDown.on("change", function (d) {
@@ -199,7 +192,7 @@ function showDeaths() {
             .attr("y", 30)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -360,7 +353,7 @@ function showConfirmedCases() {
             .attr("y", 30)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
         svg.append("text")
             .attr("x", 640)
             .attr("y", 65)
@@ -538,7 +531,7 @@ function showActiveCases() {
             .attr("y", 30)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
         svg.append("text")
             .attr("x", (width / 2))
             .attr("y", 0 - (margin.top / 2))
@@ -719,7 +712,7 @@ function showRecoveredCases() {
             .attr("y", 30)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
 
         return svg;
     })
@@ -886,7 +879,7 @@ function showPeopleTested() {
             .attr("y", 30)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
 
         return svg;
     })
@@ -1055,7 +1048,7 @@ function showPeopleHospitalized() {
             .attr("y", 30)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
 
         return svg;
     })

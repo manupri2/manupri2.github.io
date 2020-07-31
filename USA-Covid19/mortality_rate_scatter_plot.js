@@ -169,7 +169,7 @@ function showMortalityRateScatterPlot() {
             .attr("y", 2)
             .attr("text-anchor", "start")
             .style("font-size", "16px")
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
 
     })
 }

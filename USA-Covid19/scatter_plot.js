@@ -184,7 +184,7 @@ function showScatterPlot() {
         svg.append("text")
             .attr("x", 756)
             .attr("y", 0)
-            .text("Hover Over for details!");
+            .text("Hover-over for details:");
 
     })
 }
